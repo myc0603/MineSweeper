@@ -8,7 +8,7 @@ public class Cell {
     private final int y;
     private final int x;
 
-    private int aroundMineCount; // -1: not initialized or is mine
+    private int aroundMineCount;
     private boolean mine;
     private boolean released;
     private boolean checked;
