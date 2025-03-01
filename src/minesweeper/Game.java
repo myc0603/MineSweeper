@@ -2,7 +2,6 @@ package minesweeper;
 
 import java.util.Scanner;
 
-// 지면 모든 지뢰 위치 보여주기
 public class Game {
     private final Board board;
     private final Scanner scanner;

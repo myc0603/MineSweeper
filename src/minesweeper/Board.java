@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Board {
 
+    // 입력받는 방법 때문에 보드 사이즈와 지뢰 수를 커스텀할 수가 없음
     public static final int SIZE_Y = 9;
     public static final int SIZE_X = 9;
     public static final int CELL_COUNT = SIZE_Y * SIZE_X;
@@ -32,21 +33,6 @@ public class Board {
         initAroundCells();
     }
 
-    public void printBoard() {
-        System.out.println("  a b c d e f g h i");
-        for (int i = 0; i < SIZE_Y; i++) {
-            System.out.print(i + 1 + " ");
-            for (int j = 0; j < SIZE_X; j++) {
-                System.out.print(cells[i][j].showingValue() + " ");
-            }
-            System.out.println();
-        }
-        // 남은 지뢰 갯수 표시
-        System.out.println("Mine Remaining: " + (MINE_COUNT - checkMineCnt));
-    }
-
-    // StackOverflowError
-    // dfs
     public void setCellReleased(int y, int x, boolean[][] visited) {
         if (cells[y][x].isMine()) {
             // 모든 지뢰 cell released
@@ -57,7 +43,6 @@ public class Board {
                     }
                 }
             }
-
             game.setEnd();
         }
         visited[y][x] = true;
@@ -76,22 +61,21 @@ public class Board {
         }
     }
 
-    private void checkWin() {
-        if (releasedCnt == CELL_COUNT - MINE_COUNT) {
-            game.setWin();
-            //모든 cell released
-            for (int i = 0; i < SIZE_Y; i++) {
-                for (int j = 0; j < SIZE_X; j++) {
-                    cells[i][j].setReleased();
-                }
-            }
-            game.setEnd();
-        }
-    }
-
     public void checkCellMine(int i, int j) {
         cells[i][j].setChecked(!cells[i][j].isChecked());
         checkMineCnt += cells[i][j].isChecked() ? 1 : -1;
+    }
+
+    public void printBoard() {
+        System.out.println("  a b c d e f g h i");
+        for (int i = 0; i < SIZE_Y; i++) {
+            System.out.print(i + 1 + " ");
+            for (int j = 0; j < SIZE_X; j++) {
+                System.out.print(cells[i][j].showingValue() + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("Mine Remaining: " + (MINE_COUNT - checkMineCnt));
     }
 
     private void landMines() {
@@ -112,6 +96,19 @@ public class Board {
             for (int j = 0; j < SIZE_X; j++) {
                 cells[i][j].initAroundCells(around(i, j));
             }
+        }
+    }
+
+    private void checkWin() {
+        if (releasedCnt == CELL_COUNT - MINE_COUNT) {
+            game.setWin();
+            //모든 cell released
+            for (int i = 0; i < SIZE_Y; i++) {
+                for (int j = 0; j < SIZE_X; j++) {
+                    cells[i][j].setReleased();
+                }
+            }
+            game.setEnd();
         }
     }
 

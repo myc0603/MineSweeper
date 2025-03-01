@@ -8,8 +8,8 @@ public class Cell {
     private final int y;
     private final int x;
 
-    private boolean mine;
     private int aroundMineCount; // -1: not initialized or is mine
+    private boolean mine;
     private boolean released;
     private boolean checked;
 
@@ -20,21 +20,9 @@ public class Cell {
         this.x = x;
     }
 
-    public void setMine() {
-        mine = true;
-    }
-
     public void initAroundCells(List<Cell> cells) {
         this.aroundCells.addAll(cells);
         setAroundMineCount();
-    }
-
-    private void setAroundMineCount() {
-        for (Cell cell : aroundCells) {
-            if (cell.mine) {
-                aroundMineCount++;
-            }
-        }
     }
 
     public String showingValue() {
@@ -42,18 +30,6 @@ public class Cell {
             return mine ? "*" : String.valueOf(aroundMineCount);
         }
         return checked ? "m" : "-";
-    }
-
-    public boolean isReleased() {
-        return released;
-    }
-
-    public void setReleased() {
-        released = true;
-    }
-
-    public int getAroundMineCount() {
-        return aroundMineCount;
     }
 
     public int getY() {
@@ -64,8 +40,32 @@ public class Cell {
         return x;
     }
 
+    public int getAroundMineCount() {
+        return aroundMineCount;
+    }
+
+    private void setAroundMineCount() {
+        for (Cell cell : aroundCells) {
+            if (cell.mine) {
+                aroundMineCount++;
+            }
+        }
+    }
+
     public boolean isMine() {
         return mine;
+    }
+
+    public void setMine() {
+        mine = true;
+    }
+
+    public boolean isReleased() {
+        return released;
+    }
+
+    public void setReleased() {
+        released = true;
     }
 
     public void setChecked(boolean checked) {
