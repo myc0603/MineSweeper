@@ -1,6 +1,5 @@
 package minesweeper;
 
-import java.security.KeyPair;
 import java.util.*;
 
 public class Board {
